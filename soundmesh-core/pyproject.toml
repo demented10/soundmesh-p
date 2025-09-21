@@ -10,11 +10,15 @@ requires-python = ">=3.12"
 dependencies = [
     "pydantic (>=2.11.9,<3.0.0)",
     "structlog (>=25.4.0,<26.0.0)",
-    "fastapi (>=0.117.1,<0.118.0)"
+    "fastapi (>=0.117.1,<0.118.0)",
+    "uvicorn (>=0.36.0,<0.37.0)",
 ]
 
 [tool.poetry]
-packages = [{include = "soundmesh_core", from = "src"}]
+packages = [
+    {include = "soundmesh_core", from = "src"},
+    {include = "soundmesh_server", from = "src"}
+    ]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

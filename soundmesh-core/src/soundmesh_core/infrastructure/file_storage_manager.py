@@ -1,8 +1,8 @@
-from soundmesh_core.abstractions import FileStorage, FileResponse
+from soundmesh_core.abstractions import FileResponse, FileStorage
 from pathlib import Path
 import structlog
-
-class LocalStorage(FileStorage):
+import sys
+class LocalStorage(FileStorage): 
     def get_file(self, path: str) -> FileResponse:
         logger = structlog.get_logger()
         file_path = Path(path)
@@ -12,12 +12,11 @@ class LocalStorage(FileStorage):
                 logger.info(f"File {file_path} is exists")
                 if(file_path.is_file()):
                     logger.info(f"File {file_path.absolute} is not path")
-                    with file_path.open(mode="rb") as f:
-                        file_content = f.read()
-                        logger.info(f"File {f.name} readed, len is {len(file_content)}")
-                        file_metadata = {"name": file_path.name}
-                        file_response = {"content" : file_content, "metadata": file_metadata}
-                        return FileResponse(**file_response)
+                    file_content = file_path.read_bytes()
+                    logger.info(f"File {file_path.name} readed, len is {len(file_content)}")
+                    file_metadata = {"name": file_path.name, "extension": file_path.suffix, "size": sys.getsizeof(file_content)}
+                    file_response = {"content" : file_content, "metadata": file_metadata}
+                    return FileResponse(**file_response)
                 else:
                     logger.info(f"File {file_path.absolute} is not file")
             else:
