@@ -1,5 +1,5 @@
 [project]
-name = "soundmesh-core"
+name = "soundmesh-server"
 version = "0.1.0"
 description = ""
 authors = [
@@ -8,18 +8,16 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "pydantic (>=2.11.9,<3.0.0)",
-    "structlog (>=25.4.0,<26.0.0)"
 ]
 
+
 [tool.poetry]
-packages = [{include = "soundmesh_core", from = "src"}]
+packages = [{include = "soundmesh_server", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+soundmesh-core = { path = "../soundmesh-core" }
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[dependency-groups]
-dev = [
-    "pytest (>=8.4.2,<9.0.0)"
-]
